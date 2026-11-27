@@ -1,0 +1,13 @@
+interface:
+  display_name: Google PageSpeed Audit
+  short_description: Audita rendimiento con Google PageSpeed
+  default_prompt: Usa $pagespeed-audit para revisar móvil y escritorio y entregar tres mejoras concretas.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

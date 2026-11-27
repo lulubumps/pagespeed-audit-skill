@@ -1,0 +1,13 @@
+---
+name: pagespeed-audit
+description: Audit website performance exclusively with Google PageSpeed Insights. Use for a public URL, shared PSI report, screenshot or PSI API JSON, mobile and desktop Lighthouse diagnostics, CrUX Core Web Vitals, actionable performance recommendations for any stack, and before-and-after validation.
+---
+
+# Google PageSpeed audit
+
+1. **Scope.** Start with supplied PSI evidence. Record requested URL, tested final URL, page type and device. If asked about the whole site and given only a homepage, identify a small sample of public templates by purpose (e.g. landing, listing, article, product). State how many URLs were tested and limit conclusions to those templates. Default to mobile and desktop and honor an explicit device scope.
+2. **Collect.** Use the [PSI interface](https://pagespeed.web.dev/) or [official API](https://developers.google.com/speed/docs/insights/v5/get-started). Request performance and each strategy explicitly. Record capture time, Lighthouse version, requested/final URL, device, warnings and report link or filename. See [measurement rules](references/measurement.md) for partial inputs, privacy, blocked pages and interpretation.
+3. **Diagnose.** Tie each observation to a metric, audit, selector or resource and device. Use [implementation guidance](references/diagnostics.md) to turn evidence into changes appropriate for the known stack. If only scores or screenshots are available, state which diagnoses need more evidence. Verify assumptions about the CMS, CDN and optimization layers before giving product-specific instructions.
+4. **Delegate when supported.** Read [agent roles](references/roles.md). Give specialists the same sanitized source evidence after one collection pass. Reconcile their findings against the original PSI evidence and write one report. Run the same roles in sequence when delegation is unavailable.
+5. **Report.** Use [the quick report format](references/report.md) in the user's language. Prioritize up to three changes by impact, confidence and risk. Include where to make each change, how to verify it and how to revert it when relevant. Keep proposed actions distinct from actions applied and verified. Apply changes only when separately requested.
+6. **Verify authorized changes.** Use the same public URL, actual final page, device and comparable Lighthouse settings. Prefer the median of three comparable runs per device and version when feasible. Name the sample size and caveats. Check critical public behavior in the affected templates if interaction verification is authorized. Keep these functional checks separate from PSI evidence. Reassess field performance as post-deployment traffic enters the rolling CrUX window.
