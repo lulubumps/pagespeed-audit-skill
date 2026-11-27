@@ -61,3 +61,7 @@ Para una auditoría de sitio completo, proporciona URLs públicas representativa
 PageSpeed necesita acceder a la página pública. Si encuentra un inicio de sesión, un bloqueo o una redirección inesperada, el informe indica qué quedó sin medir. Si CrUX carece de datos suficientes, el informe marca las métricas faltantes. Por defecto, la auditoría entrega recomendaciones. Cualquier cambio en el sitio requiere una solicitud aparte.
 
 [Metodología de PageSpeed Insights](https://developers.google.com/speed/docs/insights/v5/about) · [API oficial](https://developers.google.com/speed/docs/insights/v5/get-started)
+
+## Licencia
+
+Este proyecto se distribuye bajo la [licencia MIT](LICENSE). Puedes usarlo, modificarlo y redistribuirlo, incluso con fines comerciales, conservando el aviso de copyright y el texto de la licencia en las copias o partes sustanciales.
