@@ -229,4 +229,8 @@ O PageSpeed precisa acessar a página pública. Se encontrar login, bloqueio ou 
 
 O projeto é distribuído sob a [licença MIT](LICENSE). Você pode usá-lo, modificá-lo e redistribuí-lo, inclusive comercialmente, preservando o aviso de direitos autorais e o texto da licença nas cópias ou partes substanciais.
 
+**Download gratuito.** Distribuo a versão oficial do PageSpeed Audit gratuitamente neste repositório. Não a vendo e mantenho o projeto em desenvolvimento contínuo sem interesse financeiro. Se alguém cobrou pela skill em si, solicite o reembolso a quem a vendeu. A reutilização, a modificação e a redistribuição continuam permitidas nos termos da licença MIT.
+
+**Precisão dos relatórios.** A skill foi criada para assistentes de IA, que podem cometer erros ou interpretar incorretamente dados incompletos. Confira as conclusões com o relatório original do PageSpeed Insights antes de aplicar mudanças.
+
 Criado por [Lulu (@lulubumps)](https://github.com/lulubumps).

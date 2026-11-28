@@ -229,4 +229,8 @@ PageSpeed needs access to the public page. If it hits a login, block or unexpect
 
 This project uses the [MIT License](LICENSE). You may use, modify and redistribute it, including commercially, provided you retain the copyright notice and license text in copies or substantial portions.
 
+**Free download.** I distribute the official version of PageSpeed Audit for free in this repository. I do not sell it, and I keep developing it with no financial interest. If someone charged you for the skill itself, ask the seller for a refund. You can still reuse, modify and redistribute it under the MIT License.
+
+**Report accuracy.** The skill is designed for AI assistants, which can make mistakes or misinterpret incomplete data. Check the conclusions against the original PageSpeed Insights report before making changes.
+
 Created by [Lulu (@lulubumps)](https://github.com/lulubumps).

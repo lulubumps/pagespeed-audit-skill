@@ -229,4 +229,8 @@ PageSpeed doit pouvoir accéder à la page publique. Une connexion, un blocage o
 
 Ce projet est distribué sous [licence MIT](LICENSE). Vous pouvez l’utiliser, le modifier et le redistribuer, y compris à des fins commerciales, en conservant la mention de copyright et le texte de la licence dans les copies ou parties substantielles.
 
+**Téléchargement gratuit.** Je distribue gratuitement la version officielle de PageSpeed Audit dans ce dépôt. Je ne la vends pas et je poursuis le développement sans intérêt financier. Si quelqu’un vous a fait payer la compétence elle-même, demandez un remboursement au vendeur. La réutilisation, la modification et la redistribution restent autorisées par la licence MIT.
+
+**Précision des rapports.** La compétence est conçue pour des assistants d’IA qui peuvent se tromper ou mal interpréter des données incomplètes. Vérifiez les conclusions dans le rapport PageSpeed Insights d’origine avant d’appliquer des modifications.
+
 Créé par [Lulu (@lulubumps)](https://github.com/lulubumps).
