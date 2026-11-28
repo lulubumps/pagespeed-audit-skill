@@ -34,6 +34,8 @@ La misma carpeta de instrucciones se usa en los cuatro entornos. Codex la carga 
 | `scripts/psi.py` | Mide con la API oficial, normaliza el JSON y compara versiones. Solo librería estándar de Python 3. |
 | `references/` | Reglas de medición, umbrales, diagnóstico por plataforma (con sección de WordPress y WooCommerce), roles y formato de informe. |
 | Cuatro subagentes | `psi-field`, `psi-lab`, `psi-implementation` y `psi-review`, en `.codex/agents/` (Codex) y `.claude/agents/` (Claude Code). Son de solo lectura. |
+| Auditoría completa en Claude (Nuevo) | `CLAUDE.md` y `.claude/pagespeed/`: informe completo, medición de las cuatro categorías de Lighthouse y diagnóstico por plataforma. Es el equivalente de la extensión de Codex. |
+| Cuatro subagentes adicionales (Nuevo) | `psi-scope`, `psi-cms`, `psi-third-party` y `psi-regression`, en `.claude/agents/`. También son de solo lectura. |
 
 ## Compatibilidad con macOS y Linux
 
@@ -179,6 +181,35 @@ python3 scripts/psi.py compare antes.json despues.json
 | `psi-lab` | Examina Lighthouse y vincula los problemas a sus recursos, elementos o auditorías. |
 | `psi-implementation` | Propone cambios concretos según la plataforma y define cómo verificarlos. |
 | `psi-review` | Detecta afirmaciones sin evidencia, ahorros duplicados y comparaciones inválidas. |
+| `psi-scope` (Nuevo) | Propone URLs públicas representativas por plantilla y dispositivo. |
+| `psi-cms` (Nuevo) | Asigna cada hallazgo a la capa responsable de la plataforma: tema, componente, app, plugin, editor o CDN. |
+| `psi-third-party` (Nuevo) | Atribuye los costos de scripts, embeds y etiquetas de terceros a su integración. |
+| `psi-regression` (Nuevo) | Compara páginas, dispositivos y configuraciones equivalentes después de un despliegue. |
+
+## Auditoría completa en Claude (Nuevo)
+
+Además del informe breve con tres mejoras, Claude puede entregar una auditoría completa: un resumen priorizado seguido de todos los hallazgos con evidencia en las cuatro categorías de Lighthouse (rendimiento, accesibilidad, buenas prácticas y SEO). Conserva los identificadores de auditoría y marca las revisiones manuales, los errores y las brechas de cobertura. Es el equivalente para Claude de la extensión que ya existe para Codex (`AGENTS.md` y `.codex/pagespeed/`).
+
+| Entorno | Cómo se activa |
+| --- | --- |
+| Claude Code | `CLAUDE.md` se carga al abrir el repositorio como proyecto. Activa el modo completo cuando pides una auditoría completa, recomendaciones por plataforma o la verificación de un despliegue. |
+| Claude.ai | Ejecuta `python3 tools/build_claude_zip.py --full`, carga `dist/pagespeed-audit-full.zip` y pide «Usa la skill pagespeed-audit en modo de auditoría completa…». En la web no hay subagentes: Claude sigue los roles en secuencia. |
+
+**Ejemplo**
+
+> Usa pagespeed-audit para hacer una auditoría completa de https://example.com/ en móvil y escritorio. Quiero todas las categorías, los hallazgos agrupados por causa con sus IDs de auditoría y los pasos específicos para mi plataforma.
+
+La guía por plataforma cubre Shopify, WordPress y WooCommerce, Drupal, Joomla, Wix, Squarespace, Webflow, Adobe Commerce, PrestaShop y CMS headless. Cada recomendación indica quién es el responsable del cambio, cómo verificarlo y cómo revertirlo.
+
+### El script de la auditoría completa
+
+```bash
+python3 .claude/pagespeed/scripts/psi.py fetch https://example.com/ --strategy both --out psi-reports
+python3 .claude/pagespeed/scripts/psi.py summarize psi-reports/*.json
+python3 .claude/pagespeed/scripts/psi.py compare antes.json despues.json
+```
+
+Este script solicita las cuatro categorías, no limita el número de hallazgos e informa las auditorías manuales o con error como revisiones pendientes. El script de `.agents/skills/pagespeed-audit/scripts/psi.py` sigue midiendo solo rendimiento. Con `--full`, el ZIP incluye este script como `scripts/psi_full.py`.
 
 ## Pruebas
 
@@ -186,7 +217,7 @@ python3 scripts/psi.py compare antes.json despues.json
 python3 -m unittest discover -s tests -v
 ```
 
-Cubren la normalización de métricas, los umbrales de validación de URL, la detección de páginas bloqueadas y la paridad entre los subagentes de Codex y Claude. Los fixtures de `tests/fixtures/` son **sintéticos** (replican la estructura de la API v5, no son mediciones reales). Si cambias las instrucciones de un subagente, actualiza su `.md` y su `.toml` a la vez; la prueba de paridad avisa si divergen.
+Cubren la normalización de métricas, los umbrales de validación de URL, la detección de páginas bloqueadas y la paridad entre los subagentes de Codex y Claude. Los fixtures de `tests/fixtures/` son **sintéticos** (replican la estructura de la API v5, no son mediciones reales). Si cambias las instrucciones de un subagente, actualiza su `.md` y su `.toml` a la vez; la prueba de paridad avisa si divergen. (Nuevo) `tests/test_claude_psi.py` verifica que el script cubra las cuatro categorías, que los ocho subagentes de Claude sean de solo lectura, que los cuatro nuevos coincidan con los de Codex y que el ZIP completo no tenga rutas rotas.
 
 ## Alcance
 

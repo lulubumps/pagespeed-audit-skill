@@ -34,6 +34,8 @@
 | `scripts/psi.py` | 通过官方 API 测量，将 JSON 标准化并比较版本。只使用 Python 3 标准库。 |
 | `references/` | 测量规则、阈值、平台诊断（含 WordPress 与 WooCommerce）、角色与报告格式。 |
 | 四个子代理 | 在 Codex 的 `.codex/agents/` 和 Claude Code 的 `.claude/agents/` 中提供只读的 `psi-field`、`psi-lab`、`psi-implementation` 和 `psi-review`。 |
+| Claude 完整审计（新增） | `CLAUDE.md` 和 `.claude/pagespeed/`：完整报告、Lighthouse 四个类别的测量以及按平台的诊断。相当于 Codex 扩展的 Claude 版本。 |
+| 另外四个子代理（新增） | `psi-scope`、`psi-cms`、`psi-third-party` 和 `psi-regression`，位于 `.claude/agents/`。同样为只读。 |
 
 ## macOS 和 Linux 兼容性
 
@@ -179,6 +181,35 @@ python3 scripts/psi.py compare antes.json despues.json
 | `psi-lab` | 检查 Lighthouse，并将问题定位到资源、元素或审计项。 |
 | `psi-implementation` | 按平台提出具体更改并说明如何验证。 |
 | `psi-review` | 识别缺乏证据的陈述、重复计算的收益和无效比较。 |
+| `psi-scope`（新增） | 按页面模板和设备提出有代表性的公开 URL。 |
+| `psi-cms`（新增） | 将每项发现对应到负责的平台层：主题、组件、应用、插件、编辑器或 CDN。 |
+| `psi-third-party`（新增） | 将第三方脚本、嵌入内容和标签的开销归因到对应的集成。 |
+| `psi-regression`（新增） | 在部署后比较对应的页面、设备和设置。 |
+
+## Claude 完整审计（新增）
+
+除了包含三项改进的简短报告，Claude 还可以交付完整审计：先给出按优先级排序的摘要，再列出 Lighthouse 四个类别（性能、无障碍、最佳实践和 SEO）中所有有证据支持的发现。审计 ID 会被保留，人工检查、错误和覆盖缺口会被标出。它是已有的 Codex 扩展（`AGENTS.md` 和 `.codex/pagespeed/`）在 Claude 上的对应版本。
+
+| 环境 | 如何启用 |
+| --- | --- |
+| Claude Code | 将仓库作为项目打开时会加载 `CLAUDE.md`。当你要求完整审计、按平台的建议或部署验证时，它会启用完整模式。 |
+| Claude.ai | 运行 `python3 tools/build_claude_zip.py --full`，上传 `dist/pagespeed-audit-full.zip`，然后输入“请用 pagespeed-audit 技能的完整审计模式……”。网页版没有子代理：Claude 会按顺序执行各个角色。 |
+
+**示例**
+
+> 使用 pagespeed-audit 对 https://example.com/ 在手机和桌面端做完整审计。我要所有类别、按原因归类并带审计 ID 的发现，以及针对我所用平台的具体步骤。
+
+平台指引涵盖 Shopify、WordPress 和 WooCommerce、Drupal、Joomla、Wix、Squarespace、Webflow、Adobe Commerce、PrestaShop 以及无头 CMS。每条建议都会说明由谁负责修改、如何验证以及如何回滚。
+
+### 完整审计脚本
+
+```bash
+python3 .claude/pagespeed/scripts/psi.py fetch https://example.com/ --strategy both --out psi-reports
+python3 .claude/pagespeed/scripts/psi.py summarize psi-reports/*.json
+python3 .claude/pagespeed/scripts/psi.py compare antes.json despues.json
+```
+
+此脚本会请求全部四个类别，不限制发现的数量，并把需要人工检查或出错的审计列为待办检查。`.agents/skills/pagespeed-audit/scripts/psi.py` 中的脚本仍然只测量性能。使用 `--full` 时，ZIP 会以 `scripts/psi_full.py` 的名称包含此脚本。
 
 ## 测试
 
@@ -186,7 +217,7 @@ python3 scripts/psi.py compare antes.json despues.json
 python3 -m unittest discover -s tests -v
 ```
 
-测试覆盖指标标准化、URL 验证、拦截页面检测，以及 Codex 和 Claude 子代理的一致性。`tests/fixtures/` 中的用例数据是**合成数据**，复现 API v5 的结构，不是实际测量。修改子代理指令时，请同时更新 `.md` 和 `.toml`。一致性测试会报告差异。
+测试覆盖指标标准化、URL 验证、拦截页面检测，以及 Codex 和 Claude 子代理的一致性。`tests/fixtures/` 中的用例数据是**合成数据**，复现 API v5 的结构，不是实际测量。修改子代理指令时，请同时更新 `.md` 和 `.toml`。一致性测试会报告差异。（新增）`tests/test_claude_psi.py` 会检查脚本是否覆盖四个类别、八个 Claude 子代理是否只读、新增的四个是否与 Codex 版本一致，以及完整 ZIP 中是否没有失效路径。
 
 ## 适用范围
 

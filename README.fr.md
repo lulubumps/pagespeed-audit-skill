@@ -34,6 +34,8 @@ Les quatre environnements utilisent les mêmes instructions. Codex les charge de
 | `scripts/psi.py` | Mesure via l’API officielle, normalise le JSON et compare les versions. Utilise uniquement la bibliothèque standard de Python 3. |
 | `references/` | Règles de mesure, seuils, diagnostics par plateforme dont WordPress et WooCommerce, rôles et format du rapport. |
 | Quatre sous-agents | `psi-field`, `psi-lab`, `psi-implementation` et `psi-review`, en lecture seule, dans `.codex/agents/` et `.claude/agents/`. |
+| Audit complet dans Claude (Nouveau) | `CLAUDE.md` et `.claude/pagespeed/` : rapport complet, mesure des quatre catégories Lighthouse et diagnostic par plateforme. C’est l’équivalent de l’extension Codex. |
+| Quatre sous-agents supplémentaires (Nouveau) | `psi-scope`, `psi-cms`, `psi-third-party` et `psi-regression`, dans `.claude/agents/`. Ils sont aussi en lecture seule. |
 
 ## Compatibilité avec macOS et Linux
 
@@ -179,6 +181,35 @@ python3 scripts/psi.py compare antes.json despues.json
 | `psi-lab` | Analyse Lighthouse et relie les problèmes aux ressources, éléments ou audits. |
 | `psi-implementation` | Propose des changements adaptés à la plateforme et explique comment les vérifier. |
 | `psi-review` | Repère les affirmations sans preuve, les gains comptés deux fois et les comparaisons invalides. |
+| `psi-scope` (Nouveau) | Propose des URL publiques représentatives par modèle de page et par appareil. |
+| `psi-cms` (Nouveau) | Rattache chaque constat à la couche responsable de la plateforme : thème, composant, application, extension, éditeur ou CDN. |
+| `psi-third-party` (Nouveau) | Attribue le coût des scripts, intégrations et balises tiers à leur intégration. |
+| `psi-regression` (Nouveau) | Compare des pages, appareils et réglages équivalents après un déploiement. |
+
+## Audit complet dans Claude (Nouveau)
+
+En plus du rapport court avec trois améliorations, Claude peut remettre un audit complet : une synthèse priorisée suivie de tous les constats étayés dans les quatre catégories Lighthouse (performance, accessibilité, bonnes pratiques et SEO). Il conserve les identifiants d’audit et signale les vérifications manuelles, les erreurs et les lacunes de couverture. C’est l’équivalent pour Claude de l’extension qui existe déjà pour Codex (`AGENTS.md` et `.codex/pagespeed/`).
+
+| Environnement | Activation |
+| --- | --- |
+| Claude Code | `CLAUDE.md` se charge à l’ouverture du dépôt comme projet. Il active le mode complet lorsque vous demandez un audit complet, des recommandations par plateforme ou la vérification d’un déploiement. |
+| Claude.ai | Exécutez `python3 tools/build_claude_zip.py --full`, importez `dist/pagespeed-audit-full.zip` et demandez « Utilise la skill pagespeed-audit en mode audit complet… ». Le web n’a pas de sous-agents : Claude suit les rôles à la suite. |
+
+**Exemple**
+
+> Utilise pagespeed-audit pour faire un audit complet de https://example.com/ sur mobile et ordinateur. Je veux toutes les catégories, les constats regroupés par cause avec leurs identifiants d’audit et les étapes propres à ma plateforme.
+
+Les consignes par plateforme couvrent Shopify, WordPress et WooCommerce, Drupal, Joomla, Wix, Squarespace, Webflow, Adobe Commerce, PrestaShop et les CMS headless. Chaque recommandation indique qui est responsable du changement, comment le vérifier et comment l’annuler.
+
+### Le script de l’audit complet
+
+```bash
+python3 .claude/pagespeed/scripts/psi.py fetch https://example.com/ --strategy both --out psi-reports
+python3 .claude/pagespeed/scripts/psi.py summarize psi-reports/*.json
+python3 .claude/pagespeed/scripts/psi.py compare antes.json despues.json
+```
+
+Ce script demande les quatre catégories, ne limite pas le nombre de constats et signale les audits manuels ou en erreur comme vérifications en attente. Le script `.agents/skills/pagespeed-audit/scripts/psi.py` continue de ne mesurer que la performance. Avec `--full`, le ZIP inclut ce script sous le nom `scripts/psi_full.py`.
 
 ## Tests
 
@@ -186,7 +217,7 @@ python3 scripts/psi.py compare antes.json despues.json
 python3 -m unittest discover -s tests -v
 ```
 
-Les tests couvrent la normalisation des métriques, la validation des URL, le repérage des pages bloquées et la parité des sous-agents Codex et Claude. Les fichiers de `tests/fixtures/` sont **synthétiques** et reproduisent la structure de l’API v5. Si vous modifiez un sous-agent, actualisez ensemble son `.md` et son `.toml`. Le test de parité détecte les écarts.
+Les tests couvrent la normalisation des métriques, la validation des URL, le repérage des pages bloquées et la parité des sous-agents Codex et Claude. Les fichiers de `tests/fixtures/` sont **synthétiques** et reproduisent la structure de l’API v5. Si vous modifiez un sous-agent, actualisez ensemble son `.md` et son `.toml`. Le test de parité détecte les écarts. (Nouveau) `tests/test_claude_psi.py` vérifie que le script couvre les quatre catégories, que les huit sous-agents de Claude sont en lecture seule, que les quatre nouveaux correspondent à ceux de Codex et que le ZIP complet ne contient aucun chemin cassé.
 
 ## Périmètre
 
