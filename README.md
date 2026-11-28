@@ -1,4 +1,24 @@
+<p align="center">
+  <img src=".agents/skills/pagespeed-audit/assets/icon.svg" width="72" height="72" alt="Ícono de PageSpeed Audit">
+</p>
+
 # Auditoría web con Google PageSpeed Insights
+
+**De un informe de PageSpeed a tres mejoras que puedes aplicar en tu sitio.**
+
+[![Google PageSpeed Insights](https://img.shields.io/badge/Google%20PageSpeed%20Insights-174EA6?style=for-the-badge&logo=google&logoColor=white)](https://pagespeed.web.dev/)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-B3371D?style=for-the-badge&logo=lighthouse&logoColor=white)](#cómo-funciona)
+[![Licencia MIT](https://img.shields.io/badge/Licencia%20MIT-5B3CC4?style=for-the-badge)](LICENSE)
+
+[![ChatGPT](https://img.shields.io/badge/ChatGPT-176B56?style=for-the-badge)](#chatgpt)
+[![Codex](https://img.shields.io/badge/Codex-343541?style=for-the-badge)](#codex)
+[![Claude](https://img.shields.io/badge/Claude-984425?style=for-the-badge&logo=claude&logoColor=white)](#claudeai)
+
+[![Python 3](https://img.shields.io/badge/Python%203-306998?style=for-the-badge&logo=python&logoColor=white)](#el-script-por-sí-solo)
+[![macOS](https://img.shields.io/badge/macOS-24292F?style=for-the-badge&logo=apple&logoColor=white)](#compatibilidad-con-macos-y-linux)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](#compatibilidad-con-macos-y-linux)
+
+[Instalación](#instalación) · [Ejemplos de uso](#cómo-se-usa) · [Cómo funciona](#cómo-funciona) · [Pruebas](#pruebas)
 
 `pagespeed-audit` es una skill para **ChatGPT**, **Codex** y **Claude** que convierte los resultados de Google PageSpeed Insights (PSI) en un informe breve con hasta tres mejoras prioritarias. Sirve para diagnosticar páginas lentas, decidir qué cambiar en una plantilla o configuración y comparar el rendimiento antes y después de un despliegue.
 
@@ -177,3 +197,5 @@ PageSpeed necesita acceder a la página pública. Si encuentra un inicio de sesi
 ## Licencia
 
 Este proyecto se distribuye bajo la [licencia MIT](LICENSE). Puedes usarlo, modificarlo y redistribuirlo, incluso con fines comerciales, conservando el aviso de copyright y el texto de la licencia en las copias o partes sustanciales.
+
+Creado por [Lulu (@lulubumps)](https://github.com/lulubumps).
