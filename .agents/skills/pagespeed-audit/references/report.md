@@ -11,3 +11,13 @@ Keep the default report to roughly one screen for a single URL. Use more detail 
 | 1 | Device, audit/metric, resource or selector when available | One concrete action with the owner or settings area | Retest the specific metric and feature, name the rollback when relevant |
 
 4. If changes were applied, list their observed results and unverified checks. If evidence is incomplete, specify the next requested report, missing device or template. Don't invent a recommendation to fill the table.
+
+## Example (shortened)
+
+> **Mobile is the weak spot: LCP is 5.6 s because the hero image loads late (2.4 s load delay). Fix its discovery first.**
+> Captured 2026-11-20, final URL https://example.com/, PSI report links attached.
+> Lab mobile: score 42, FCP 3.1 s, LCP 5.6 s, TBT 780 ms, CLS 0.08, SI 6.2 s. Field: origin fallback only (page has no CrUX data), LCP 3.9 s (poor), INP 240 ms, CLS 0.07.
+>
+> | Priority | Evidence and affected template | Change and where to make it | Verify and revert |
+> | --- | --- | --- | --- |
+> | 1 | Mobile, LCP element `div.hero > img.wp-post-image`, load delay 2.4 s, image has `loading="lazy"` | Remove lazy-loading from the hero image in the theme template | Retest mobile LCP and phases (median of 3). Revert by restoring the attribute |

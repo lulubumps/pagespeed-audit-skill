@@ -1,6 +1,6 @@
 # Specialist roles
 
-The coordinating agent acquires PSI evidence once. Send each role sanitized reports or relevant excerpts with timestamps, strategies, final URL and known stack. Prefer installed project agents named below. Where custom definitions are unavailable, delegate with the equivalent role instructions. Roles are read-only and use the evidence provided. Prevent repeated requests to Google by asking specialists to identify gaps for the coordinator.
+The coordinating agent acquires PSI evidence once. Send each role sanitized reports or relevant excerpts with timestamps, strategies, final URL and known stack. Prefer installed project agents named below (Codex: `.codex/agents/psi-*.toml`; Claude Code: `.claude/agents/psi-*.md`). Subagents cannot spawn other subagents, so the coordinator runs every step. Include the `scripts/psi.py summarize` output with the raw excerpts, since specialists are read-only and should not call `fetch`. Where custom definitions are unavailable, delegate with the equivalent role instructions. Roles are read-only and use the evidence provided. Prevent repeated requests to Google by asking specialists to identify gaps for the coordinator.
 
 | Agent | Job | Output to coordinator |
 | --- | --- | --- |

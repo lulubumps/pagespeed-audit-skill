@@ -1,0 +1,210 @@
+{
+ "id": "https://example.com/",
+ "analysisUTCTimestamp": "2026-11-20T15:00:00.000Z",
+ "loadingExperience": {
+  "id": "https://example.com/",
+  "metrics": {}
+ },
+ "originLoadingExperience": {
+  "id": "https://example.com",
+  "metrics": {}
+ },
+ "lighthouseResult": {
+  "requestedUrl": "https://example.com/",
+  "finalDisplayedUrl": "https://example.com/cdn-cgi/challenge-platform/",
+  "lighthouseVersion": "12.6.0",
+  "fetchTime": "2026-11-20T15:00:00.000Z",
+  "runWarnings": [],
+  "configSettings": {
+   "formFactor": "mobile",
+   "locale": "en"
+  },
+  "categories": {
+   "performance": {
+    "score": null
+   }
+  },
+  "audits": {
+   "first-contentful-paint": {
+    "id": "first-contentful-paint",
+    "title": "First Contentful Paint",
+    "score": 0.5,
+    "scoreDisplayMode": "numeric",
+    "numericValue": 3100,
+    "displayValue": "3.1 s"
+   },
+   "largest-contentful-paint": {
+    "id": "largest-contentful-paint",
+    "title": "Largest Contentful Paint",
+    "score": 0.3,
+    "scoreDisplayMode": "numeric",
+    "numericValue": 5600,
+    "displayValue": "5.6 s"
+   },
+   "total-blocking-time": {
+    "id": "total-blocking-time",
+    "title": "Total Blocking Time",
+    "score": 0.4,
+    "scoreDisplayMode": "numeric",
+    "numericValue": 780,
+    "displayValue": "780 ms"
+   },
+   "cumulative-layout-shift": {
+    "id": "cumulative-layout-shift",
+    "title": "Cumulative Layout Shift",
+    "score": 0.9,
+    "scoreDisplayMode": "numeric",
+    "numericValue": 0.08,
+    "displayValue": "0.08"
+   },
+   "speed-index": {
+    "id": "speed-index",
+    "title": "Speed Index",
+    "score": 0.5,
+    "scoreDisplayMode": "numeric",
+    "numericValue": 6200,
+    "displayValue": "6.2 s"
+   },
+   "render-blocking-resources": {
+    "id": "render-blocking-resources",
+    "title": "Eliminate render-blocking resources",
+    "score": 0.2,
+    "scoreDisplayMode": "metricSavings",
+    "numericValue": 0,
+    "displayValue": "Potential savings of 820 ms",
+    "details": {
+     "type": "opportunity",
+     "overallSavingsMs": 820
+    },
+    "metricSavings": {
+     "FCP": 820,
+     "LCP": 820
+    }
+   },
+   "uses-optimized-images": {
+    "id": "uses-optimized-images",
+    "title": "Efficiently encode images",
+    "score": 0.3,
+    "scoreDisplayMode": "metricSavings",
+    "numericValue": 0,
+    "displayValue": "Potential savings of 412 KiB",
+    "details": {
+     "type": "opportunity",
+     "overallSavingsMs": 150,
+     "overallSavingsBytes": 421888
+    }
+   },
+   "unused-javascript": {
+    "id": "unused-javascript",
+    "title": "Reduce unused JavaScript",
+    "score": 0.4,
+    "scoreDisplayMode": "metricSavings",
+    "numericValue": 0,
+    "displayValue": "Potential savings of 301 KiB",
+    "details": {
+     "type": "opportunity",
+     "overallSavingsMs": 300,
+     "overallSavingsBytes": 308224
+    }
+   },
+   "third-party-summary": {
+    "id": "third-party-summary",
+    "title": "Reduce the impact of third-party code",
+    "score": 0.5,
+    "scoreDisplayMode": "binary",
+    "numericValue": 0,
+    "displayValue": "Third-party code blocked the main thread for 450 ms",
+    "details": {
+     "type": "table",
+     "items": []
+    }
+   },
+   "uses-long-cache-ttl": {
+    "id": "uses-long-cache-ttl",
+    "title": "Serve static assets with an efficient cache policy",
+    "score": 0.6,
+    "scoreDisplayMode": "binary",
+    "numericValue": 0,
+    "displayValue": "12 resources found",
+    "details": {
+     "type": "table",
+     "items": []
+    }
+   },
+   "viewport": {
+    "id": "viewport",
+    "title": "Has a viewport meta tag",
+    "score": 1,
+    "scoreDisplayMode": "binary",
+    "numericValue": 1
+   },
+   "redirects": {
+    "id": "redirects",
+    "title": "Avoid multiple page redirects",
+    "score": null,
+    "scoreDisplayMode": "notApplicable",
+    "numericValue": 0
+   },
+   "screenshot-thumbnails": {
+    "id": "screenshot-thumbnails",
+    "title": "Screenshot Thumbnails",
+    "score": null,
+    "scoreDisplayMode": "informative",
+    "details": {
+     "type": "filmstrip",
+     "items": []
+    }
+   },
+   "largest-contentful-paint-element": {
+    "id": "largest-contentful-paint-element",
+    "title": "Largest Contentful Paint element",
+    "score": null,
+    "scoreDisplayMode": "informative",
+    "numericValue": 5600,
+    "displayValue": "5600 ms",
+    "details": {
+     "type": "list",
+     "items": [
+      {
+       "type": "table",
+       "items": [
+        {
+         "node": {
+          "type": "node",
+          "selector": "div.hero > img.wp-post-image",
+          "snippet": "<img class=\"wp-post-image\" loading=\"lazy\" src=\"hero.jpg\">"
+         }
+        }
+       ]
+      },
+      {
+       "type": "table",
+       "items": [
+        {
+         "phase": "TTFB",
+         "timing": 900
+        },
+        {
+         "phase": "Load Delay",
+         "timing": 2400
+        },
+        {
+         "phase": "Load Time",
+         "timing": 800
+        },
+        {
+         "phase": "Render Delay",
+         "timing": 1500
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "runtimeError": {
+   "code": "NO_FCP",
+   "message": "The page did not paint any content."
+  }
+ }
+}
