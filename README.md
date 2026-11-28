@@ -1,16 +1,14 @@
-🌐 [Español](README.md) · [English](README.en.md) · [Português](README.pt.md) · [Français](README.fr.md) · [简体中文](README.zh-CN.md) · [हिन्दी](README.hi.md)
-
 <p align="center">
   <img src=".agents/skills/pagespeed-audit/assets/icon.svg" width="72" height="72" alt="Ícono de PageSpeed Audit">
 </p>
-
-# Auditoría web con Google PageSpeed Insights
+<h1 align="center">PageSpeed Audit</h1>
+<p align="center"><strong>Español</strong> · <a href="README.en.md">English</a> · <a href="README.pt.md">Português</a> · <a href="README.fr.md">Français</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.hi.md">हिन्दी</a></p>
 
 **De un informe de PageSpeed a tres mejoras que puedes aplicar en tu sitio.**
 
 [![Google PageSpeed Insights](https://img.shields.io/badge/Google%20PageSpeed%20Insights-174EA6?style=for-the-badge&logo=google&logoColor=white)](https://pagespeed.web.dev/)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-B3371D?style=for-the-badge&logo=lighthouse&logoColor=white)](#cómo-funciona)
-[![Licencia MIT](https://img.shields.io/badge/Licencia%20MIT-5B3CC4?style=for-the-badge)](LICENSE)
+[![MIT](https://img.shields.io/badge/MIT-5B3CC4?style=for-the-badge)](LICENSE)
 
 [![ChatGPT](https://img.shields.io/badge/ChatGPT-176B56?style=for-the-badge)](#chatgpt)
 [![Codex](https://img.shields.io/badge/Codex-343541?style=for-the-badge)](#codex)
@@ -50,8 +48,8 @@ Los comandos de esta guía se pueden ejecutar en Terminal en macOS o en una term
 ```bash
 git --version
 python3 --version
-codex --version   # Si usarás Codex CLI
-claude --version  # Si usarás Claude Code
+codex --version
+claude --version
 ```
 
 Si te falta el cliente de terminal, consulta la [instalación oficial de Codex CLI](https://learn.chatgpt.com/docs/codex/cli) o la [guía de instalación de Claude Code](https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code).
