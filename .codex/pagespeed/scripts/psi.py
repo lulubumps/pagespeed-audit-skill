@@ -331,9 +331,20 @@ def compare(before, after):
             caveats.append(f"{label} differs: {before[field]} vs {after[field]}")
     if _norm(before["final_url"]) != _norm(after["final_url"]):
         caveats.append(f"Final URL differs: {before['final_url']} vs {after['final_url']}")
+    b, a = before["lab"], after["lab"]
+    if b["score"] is None or a["score"] is None:
+        caveats.append("At least one Lighthouse run did not produce a valid score.")
+    if not before["device"] or not after["device"] or not before["final_url"] or not after["final_url"]:
+        caveats.append("At least one run is missing its final URL or device.")
+    for run in (before, after):
+        if INTERSTITIAL_PATH.search(run["final_url"] or ""):
+            caveats.append("At least one run reached a possible interstitial.")
+            break
+    if caveats:
+        return {"caveats": caveats, "rows": []}
+
     caveats.append("Single runs vary; prefer the median of three comparable runs per version and device.")
     rows = []
-    b, a = before["lab"], after["lab"]
     if b["score"] is not None and a["score"] is not None:
         rows.append(("Score", b["score"], a["score"], a["score"] - b["score"]))
     for k in ("FCP", "LCP", "TBT", "CLS", "SI"):
@@ -346,6 +357,9 @@ def compare(before, after):
 def compare_markdown(c, b, a):
     L = [f"### Before ({b['analysis_utc']}) vs after ({a['analysis_utc']})"]
     L += [f"- CAVEAT: {x}" for x in c["caveats"]]
+    if not c["rows"]:
+        L.append("\nNo comparable lab metrics to report.")
+        return "\n".join(L)
     L.append("\n| Metric | Before | After | Change |\n| --- | --- | --- | --- |")
     for name, bv, av, d in c["rows"]:
         if name in ("Score", "CLS"):
