@@ -15,6 +15,29 @@ La misma carpeta de instrucciones se usa en los cuatro entornos. Codex la carga 
 | `references/` | Reglas de medición, umbrales, diagnóstico por plataforma (con sección de WordPress y WooCommerce), roles y formato de informe. |
 | Cuatro subagentes | `psi-field`, `psi-lab`, `psi-implementation` y `psi-review`, en `.codex/agents/` (Codex) y `.claude/agents/` (Claude Code). Son de solo lectura. |
 
+## Compatibilidad con macOS y Linux
+
+| Cómo quieres usar la skill | Requisitos en macOS y Linux |
+| --- | --- |
+| ChatGPT o Claude.ai en el navegador | Una cuenta con permiso para cargar skills y el ZIP preparado. Si ya tienes el ZIP, puedes cargarlo sin instalar Git ni Python en tu equipo. |
+| Codex CLI o Claude Code | Git para clonar el proyecto y el cliente de terminal que vayas a usar. |
+| Generar el ZIP, ejecutar `psi.py` o correr las pruebas | Python 3. El proyecto usa la biblioteca estándar y no requiere instalar paquetes con `pip`. Para medir una URL nueva con `psi.py fetch` también necesitas acceso a la API de PageSpeed Insights. |
+
+Los comandos de esta guía se pueden ejecutar en Terminal en macOS o en una terminal de Linux con Bash o Zsh. Para comprobar las herramientas que necesitas, ejecuta los comandos correspondientes a tu caso.
+
+```bash
+git --version
+python3 --version
+codex --version   # Si usarás Codex CLI
+claude --version  # Si usarás Claude Code
+```
+
+Si te falta el cliente de terminal, consulta la [instalación oficial de Codex CLI](https://learn.chatgpt.com/docs/codex/cli) o la [guía de instalación de Claude Code](https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code).
+
+En macOS y Linux, Git conserva el enlace simbólico de Claude Code al clonar en un sistema de archivos que admita enlaces. Si tu copia no lo conserva, puedes usar una copia de la carpeta compartida, como se explica en la sección de Claude Code.
+
+La suite del proyecto se ejecutó en Linux. El flujo local en macOS queda pendiente de validación.
+
 ## Instalación
 
 | Entorno | Cómo se instala | Cómo se invoca |
@@ -66,7 +89,7 @@ claude
 
 La skill se carga desde `.claude/skills/pagespeed-audit/` y los subagentes desde `.claude/agents/`. Pídele la auditoría con tus palabras (por ejemplo, «revisa la velocidad de https://example.com/ en móvil y escritorio») o invócala con `/pagespeed-audit`.
 
-> En Windows, si Git no crea el enlace simbólico de `.claude/skills/pagespeed-audit`, copia a mano la carpeta `.agents/skills/pagespeed-audit/` en esa ruta.
+> Si tu copia del proyecto no conserva el enlace simbólico, coloca una copia completa de `.agents/skills/pagespeed-audit/` en `.claude/skills/pagespeed-audit/`. En Windows también puedes usar esta alternativa si Git no crea el enlace.
 
 ### Claude.ai
 
