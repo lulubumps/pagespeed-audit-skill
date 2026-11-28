@@ -60,6 +60,68 @@ En macOS y Linux, Git conserva el enlace simbólico de Claude Code al clonar en 
 
 La suite del proyecto se ejecutó en Linux. El flujo local en macOS queda pendiente de validación.
 
+### Comprobar e instalar los requisitos
+
+Si solo vas a cargar un ZIP ya preparado en ChatGPT o Claude.ai, puedes saltar la instalación local. Para clonar el repositorio, instala Git. Para generar el ZIP, usar los scripts o ejecutar las pruebas, instala Python 3. Para trabajar en terminal, instala el cliente correspondiente y sigue su guía para iniciar sesión.
+
+#### macOS
+
+Homebrew es opcional. Instálalo desde su sitio oficial y sigue las instrucciones de configuración de `PATH` que muestre el instalador. Después abre una terminal nueva y ejecuta los comandos. Si prefieres instalar directamente, usa Git para macOS y el instalador de Python para macOS.
+
+[Homebrew](https://brew.sh/) · [Git (macOS)](https://git-scm.com/install/mac) · [Python (macOS)](https://www.python.org/downloads/macos/)
+
+```bash
+brew --version
+brew install git python
+git --version
+python3 --version
+```
+
+#### Linux (Ubuntu, Debian, Fedora y Arch)
+
+Ejecuta solo el bloque de tu distribución. Si usas otra, consulta las instrucciones de Git y la documentación de tu distribución para instalar Git y Python 3.
+
+[Git (Linux)](https://git-scm.com/install/linux) · [Python 3 (Ubuntu)](https://packages.ubuntu.com/search?keywords=python3) · [Python 3 (Debian)](https://packages.debian.org/search?keywords=python3) · [Python 3 (Fedora)](https://docs.fedoraproject.org/en-US/quick-docs/installing-python/) · [Python (Arch)](https://archlinux.org/packages/extra/x86_64/python/)
+
+```bash
+# Ubuntu / Debian
+sudo apt update
+sudo apt install git python3
+```
+
+```bash
+# Fedora
+sudo dnf install git python3
+```
+
+```bash
+# Arch Linux
+sudo pacman -Syu git python
+```
+
+```bash
+git --version
+python3 --version
+```
+
+#### Windows (PowerShell)
+
+Instala Git para Windows y Python 3 desde sus sitios oficiales. Abre una ventana nueva de PowerShell y ejecuta las comprobaciones. Si funciona `py -3`, úsalo en lugar de `python3` en los ejemplos que invoquen Python. Si el lanzador `py` no está disponible pero `python --version` muestra Python 3, usa `python`. Si trabajas en WSL, sigue las instrucciones de Linux dentro de tu distribución.
+
+[Git for Windows](https://git-scm.com/install/windows) · [Python (Windows)](https://www.python.org/downloads/windows/) · [WSL](https://learn.microsoft.com/windows/wsl/install)
+
+```powershell
+git --version
+py -3 --version
+python --version
+```
+
+#### Clientes de terminal y diagnóstico
+
+Consulta la instalación oficial de Codex CLI o Claude Code para tu sistema y comprueba el cliente elegido con `codex --version` o `claude --version`. Si un comando no se reconoce, vuelve a abrir la terminal y revisa el `PATH` según la guía oficial. Desde la raíz del repositorio, comprueba `python3 -m unittest discover -s tests -v` y ejecuta `python3 tools/build_claude_zip.py --full` si necesitas generar el paquete completo. La medición en vivo también requiere acceso a la API de PageSpeed Insights.
+
+[Codex CLI](https://learn.chatgpt.com/docs/codex/cli) · [Claude Code](https://code.claude.com/docs/en/setup)
+
 ## Instalación
 
 | Entorno | Cómo se instala | Cómo se invoca |

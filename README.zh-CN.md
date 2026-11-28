@@ -60,6 +60,68 @@ claude --version
 
 测试套件已在 Linux 上运行。macOS 上的本地流程仍待验证。
 
+### 检查并安装依赖工具
+
+如果只在 ChatGPT 或 Claude.ai 上传已准备好的 ZIP，可以跳过本地安装。克隆仓库需要 Git，生成 ZIP、运行脚本或测试需要 Python 3。在终端使用时，请安装所选客户端并按照官方指南登录。
+
+#### macOS
+
+Homebrew 是可选项。从官方网站安装并按安装器提示配置 `PATH`。重新打开“终端”，然后运行以下命令。也可通过 Git 和 Python 的 macOS 官方安装程序直接安装。
+
+[Homebrew](https://brew.sh/) · [Git (macOS)](https://git-scm.com/install/mac) · [Python (macOS)](https://www.python.org/downloads/macos/)
+
+```bash
+brew --version
+brew install git python
+git --version
+python3 --version
+```
+
+#### Linux（Ubuntu、Debian、Fedora 和 Arch）
+
+只运行适用于所用发行版的命令。对于其他发行版，请参阅 Git 指南和发行版文档，安装 Git 与 Python 3。
+
+[Git (Linux)](https://git-scm.com/install/linux) · [Python 3 (Ubuntu)](https://packages.ubuntu.com/search?keywords=python3) · [Python 3 (Debian)](https://packages.debian.org/search?keywords=python3) · [Python 3 (Fedora)](https://docs.fedoraproject.org/en-US/quick-docs/installing-python/) · [Python (Arch)](https://archlinux.org/packages/extra/x86_64/python/)
+
+```bash
+# Ubuntu / Debian
+sudo apt update
+sudo apt install git python3
+```
+
+```bash
+# Fedora
+sudo dnf install git python3
+```
+
+```bash
+# Arch Linux
+sudo pacman -Syu git python
+```
+
+```bash
+git --version
+python3 --version
+```
+
+#### Windows（PowerShell）
+
+从官网安装 Git for Windows 和 Python 3。重新打开 PowerShell 并运行检查。如果 `py -3` 可用，请在 Python 示例中用它代替 `python3`。如果没有 `py` 启动器，但 `python --version` 显示 Python 3，请使用 `python`。使用 WSL 时，请在发行版内按 Linux 步骤操作。
+
+[Git for Windows](https://git-scm.com/install/windows) · [Python (Windows)](https://www.python.org/downloads/windows/) · [WSL](https://learn.microsoft.com/windows/wsl/install)
+
+```powershell
+git --version
+py -3 --version
+python --version
+```
+
+#### 终端客户端与故障排查
+
+根据系统查阅 Codex CLI 或 Claude Code 官方安装指南，用 `codex --version` 或 `claude --version` 检查所选客户端。如找不到命令，请重新打开终端，并按照官方指南检查 `PATH`。在仓库根目录运行 `python3 -m unittest discover -s tests -v` 检查环境。如需完整安装包，运行 `python3 tools/build_claude_zip.py --full`。实时测量还需要访问 PageSpeed Insights API。
+
+[Codex CLI](https://learn.chatgpt.com/docs/codex/cli) · [Claude Code](https://code.claude.com/docs/en/setup)
+
 ## 安装
 
 | 环境 | 安装方法 | 调用方法 |

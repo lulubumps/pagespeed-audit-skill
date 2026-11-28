@@ -60,6 +60,68 @@ macOS और Linux में फ़ाइल सिस्टम के समर
 
 टेस्ट Linux पर चलाए गए हैं। macOS पर स्थानीय वर्कफ़्लो की पुष्टि बाकी है।
 
+### ज़रूरी टूल जाँचें और इंस्टॉल करें
+
+अगर आपको ChatGPT या Claude.ai में सिर्फ़ तैयार ZIP अपलोड करना है, तो स्थानीय इंस्टॉलेशन छोड़ दें। रिपॉज़िटरी क्लोन करने के लिए Git और ZIP बनाने, स्क्रिप्ट या टेस्ट चलाने के लिए Python 3 इंस्टॉल करें। टर्मिनल में काम करने के लिए अपना CLI इंस्टॉल करें और उसकी गाइड के अनुसार साइन इन करें।
+
+#### macOS
+
+Homebrew वैकल्पिक है। आधिकारिक साइट से इंस्टॉल करें और इंस्टॉलर के `PATH` निर्देशों का पालन करें। फिर नया Terminal खोलकर कमांड चलाएँ। सीधे इंस्टॉल करने के लिए macOS के आधिकारिक Git और Python इंस्टॉलर इस्तेमाल करें।
+
+[Homebrew](https://brew.sh/) · [Git (macOS)](https://git-scm.com/install/mac) · [Python (macOS)](https://www.python.org/downloads/macos/)
+
+```bash
+brew --version
+brew install git python
+git --version
+python3 --version
+```
+
+#### Linux (Ubuntu, Debian, Fedora और Arch)
+
+केवल अपने डिस्ट्रिब्यूशन वाला कमांड ब्लॉक चलाएँ। दूसरे डिस्ट्रिब्यूशन पर Git और Python 3 के लिए Git गाइड और अपने डिस्ट्रिब्यूशन का दस्तावेज़ देखें।
+
+[Git (Linux)](https://git-scm.com/install/linux) · [Python 3 (Ubuntu)](https://packages.ubuntu.com/search?keywords=python3) · [Python 3 (Debian)](https://packages.debian.org/search?keywords=python3) · [Python 3 (Fedora)](https://docs.fedoraproject.org/en-US/quick-docs/installing-python/) · [Python (Arch)](https://archlinux.org/packages/extra/x86_64/python/)
+
+```bash
+# Ubuntu / Debian
+sudo apt update
+sudo apt install git python3
+```
+
+```bash
+# Fedora
+sudo dnf install git python3
+```
+
+```bash
+# Arch Linux
+sudo pacman -Syu git python
+```
+
+```bash
+git --version
+python3 --version
+```
+
+#### Windows (PowerShell)
+
+आधिकारिक साइटों से Git for Windows और Python 3 इंस्टॉल करें। नई PowerShell विंडो खोलकर जाँच के कमांड चलाएँ। अगर `py -3` काम करता है तो Python के उदाहरणों में `python3` की जगह उसका इस्तेमाल करें। अगर `py` लॉन्चर उपलब्ध नहीं है और `python --version` में Python 3 दिखता है तो `python` इस्तेमाल करें। WSL के लिए अपने डिस्ट्रिब्यूशन में Linux के निर्देश अपनाएँ।
+
+[Git for Windows](https://git-scm.com/install/windows) · [Python (Windows)](https://www.python.org/downloads/windows/) · [WSL](https://learn.microsoft.com/windows/wsl/install)
+
+```powershell
+git --version
+py -3 --version
+python --version
+```
+
+#### टर्मिनल क्लाइंट और समस्या का समाधान
+
+अपने सिस्टम के लिए Codex CLI या Claude Code की आधिकारिक गाइड देखें और `codex --version` या `claude --version` से चुने हुए क्लाइंट की जाँच करें। कमांड न मिले तो टर्मिनल दोबारा खोलें और आधिकारिक गाइड से `PATH` जाँचें। रिपॉज़िटरी की मूल डायरेक्टरी में `python3 -m unittest discover -s tests -v` चलाएँ। पूरे पैकेज के लिए `python3 tools/build_claude_zip.py --full` चलाएँ। लाइव माप के लिए PageSpeed Insights API का ऐक्सेस भी चाहिए।
+
+[Codex CLI](https://learn.chatgpt.com/docs/codex/cli) · [Claude Code](https://code.claude.com/docs/en/setup)
+
 ## इंस्टॉलेशन
 
 | परिवेश | इंस्टॉल करने का तरीका | इस्तेमाल करने का तरीका |
