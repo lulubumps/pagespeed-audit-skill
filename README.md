@@ -1,21 +1,48 @@
 # Auditoría web con Google PageSpeed Insights
 
-`pagespeed-audit` es una skill para **Codex** y **Claude** que convierte los resultados de Google PageSpeed Insights (PSI) en un informe breve con hasta tres mejoras prioritarias. Sirve para diagnosticar páginas lentas, decidir qué cambiar en una plantilla o configuración y comparar el rendimiento antes y después de un despliegue.
+`pagespeed-audit` es una skill para **ChatGPT**, **Codex** y **Claude** que convierte los resultados de Google PageSpeed Insights (PSI) en un informe breve con hasta tres mejoras prioritarias. Sirve para diagnosticar páginas lentas, decidir qué cambiar en una plantilla o configuración y comparar el rendimiento antes y después de un despliegue.
 
 Funciona con sitios públicos HTTP(S), incluidos WordPress, WooCommerce, Shopify, sitios estáticos y aplicaciones con renderizado en cliente o servidor. Puede partir de una URL pública, un informe compartido, capturas o un JSON de PSI.
 
-Una sola fuente (`.agents/skills/pagespeed-audit/`) sirve a ambos agentes: Claude Code la lee desde `.claude/skills/` mediante un enlace simbólico.
+La misma carpeta de instrucciones se usa en los cuatro entornos. Codex la carga desde `.agents/skills/`, Claude Code accede mediante un enlace simbólico en `.claude/skills/` y las interfaces web permiten cargar la skill cuando la cuenta tiene esa función habilitada.
 
 ## Qué incluye
 
 | Pieza | Para qué sirve |
 | --- | --- |
-| `SKILL.md` | Flujo de trabajo en seis pasos y reglas que no se negocian. |
+| `SKILL.md` | Instrucciones para recopilar evidencia, diagnosticar problemas y entregar el informe. |
 | `scripts/psi.py` | Mide con la API oficial, normaliza el JSON y compara versiones. Solo librería estándar de Python 3. |
 | `references/` | Reglas de medición, umbrales, diagnóstico por plataforma (con sección de WordPress y WooCommerce), roles y formato de informe. |
 | Cuatro subagentes | `psi-field`, `psi-lab`, `psi-implementation` y `psi-review`, en `.codex/agents/` (Codex) y `.claude/agents/` (Claude Code). Son de solo lectura. |
 
 ## Instalación
+
+| Entorno | Cómo se instala | Cómo se invoca |
+| --- | --- | --- |
+| ChatGPT | Carga la skill en **Plugins → Habilidades** si tu cuenta lo permite. | «Usa la skill pagespeed-audit…» |
+| Codex | Abre el repositorio como proyecto. | `$pagespeed-audit` |
+| Claude.ai | Carga el ZIP en **Customize → Skills**. | «Usa la skill pagespeed-audit…» |
+| Claude Code | Abre el repositorio como proyecto. | `/pagespeed-audit` |
+
+### Preparar el ZIP para las interfaces web
+
+Clona el repositorio y ejecuta el empaquetador con Python 3. En Windows, si `python3` no está disponible, usa `py -3 tools/build_claude_zip.py`.
+
+```bash
+git clone https://github.com/lulubumps/pagespeed-audit-skill.git
+cd pagespeed-audit-skill
+python3 tools/build_claude_zip.py
+```
+
+Carga `dist/pagespeed-audit.zip`. El paquete contiene `SKILL.md`, las referencias y el script. Para usar los cuatro subagentes configurados en el repositorio, abre el proyecto en Codex o Claude Code. En las interfaces web, la skill puede seguir el flujo de forma secuencial.
+
+### ChatGPT
+
+1. En la barra lateral, abre **Plugins → Habilidades → Crear → Cargar desde tu computadora**.
+2. Selecciona `dist/pagespeed-audit.zip` y espera a que termine la revisión de la carga.
+3. En un chat nuevo, escribe «Usa la skill pagespeed-audit para revisar mi sitio en móvil y escritorio» y añade la URL pública o adjunta el informe de PSI.
+
+La carga depende del acceso a Habilidades y de los permisos del espacio de trabajo. Si el menú no aparece, puedes usar la instalación de Codex o adjuntar un informe de PSI y pedir el análisis directamente en el chat. Consulta la [guía oficial de Habilidades en ChatGPT](https://help.openai.com/es-419/articles/20001066-skills-in-chatgpt).
 
 ### Codex
 
@@ -41,12 +68,17 @@ La skill se carga desde `.claude/skills/pagespeed-audit/` y los subagentes desde
 
 > En Windows, si Git no crea el enlace simbólico de `.claude/skills/pagespeed-audit`, copia a mano la carpeta `.agents/skills/pagespeed-audit/` en esa ruta.
 
-### Claude.ai (web, escritorio y móvil)
+### Claude.ai
 
-1. Genera el paquete con `python3 tools/build_claude_zip.py`. Queda en `dist/pagespeed-audit.zip`.
-2. Súbelo en la sección de Skills de la configuración de Claude.
+1. Habilita la ejecución de código y creación de archivos en **Settings → Capabilities** si tu cuenta muestra esa opción. En un espacio administrado, comprueba que la política de la organización permita usar skills.
+2. Abre **Customize → Skills → + → Create skill → Upload a skill**.
+3. Selecciona `dist/pagespeed-audit.zip`, activa la skill y pídela por nombre en una conversación.
 
-Limitación: en Claude.ai el entorno de ejecución puede no tener acceso a Google, así que `fetch` podría fallar. En ese caso, mide la URL en [pagespeed.web.dev](https://pagespeed.web.dev/) (o con Claude Code) y entrega el JSON, el enlace o las capturas; la skill los analiza con `summarize` sin pedir otra medición.
+Consulta la [guía oficial de Skills en Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude).
+
+### Si el chat no puede medir la URL
+
+En ChatGPT y Claude.ai, la medición automática depende del acceso del entorno a PageSpeed Insights. Si la solicitud falla, ejecuta la prueba en [PageSpeed Insights](https://pagespeed.web.dev/) y comparte el enlace, las capturas de móvil y escritorio o el JSON. El comando `summarize` procesa archivos JSON. Los enlaces y las capturas se interpretan con la evidencia visible.
 
 ### Agregarlo a otro proyecto
 
@@ -54,13 +86,13 @@ Limitación: en Claude.ai el entorno de ejecución puede no tener acceso a Googl
 2. Para habilitar la delegación, copia los cuatro `psi-*.toml` a `.codex/agents/` o los cuatro `psi-*.md` a `.claude/agents/`. Conserva las definiciones que ya existan y revisa cualquier archivo con el mismo nombre antes de reemplazarlo.
 3. Abre el agente desde la raíz del proyecto.
 
-La skill no requiere dependencias propias. Para medir una URL nueva necesita acceso a la API de PSI. Sin clave la cuota anónima es baja; si tu entorno la requiere, expórtala como variable de entorno y no la guardes en el repositorio:
+La skill no requiere dependencias propias. Para medir una URL nueva con el script, el entorno necesita acceso a la API de PSI. Sin clave la cuota anónima es baja; si tu entorno la requiere, expórtala como variable de entorno y no la guardes en el repositorio:
 
 ```bash
 export PAGESPEED_API_KEY="..."
 ```
 
-La clave viaja en la cabecera `X-Goog-Api-Key`, nunca en la URL, en los archivos guardados ni en los mensajes de error.
+El script envía la clave a Google en la cabecera `X-Goog-Api-Key`. Evita pegarla en el chat o incluirla en informes compartidos.
 
 ## Cómo se usa
 
@@ -89,7 +121,7 @@ python3 scripts/psi.py summarize psi-reports/*.json
 python3 scripts/psi.py compare antes.json despues.json
 ```
 
-`fetch` rechaza URLs con credenciales, tokens, hosts internos o IP privadas antes de enviar nada a Google. `summarize` y `compare` aceptan `--json` para salida estructurada.
+`fetch` detecta varios patrones comunes de credenciales y direcciones internas. Antes de medir, revisa que la URL sea pública y que no incluya tokens, datos personales ni identificadores privados. `summarize` y `compare` aceptan `--json` para salida estructurada.
 
 ## Cómo funciona
 
